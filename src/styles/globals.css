@@ -3,18 +3,8 @@
 @tailwind utilities;
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
-body {
-  font-family: 'Inter', sans-serif;
-}
 
 @layer components {
-  /* .button-outline {
-    @apply bg-transparent text-sm bg-slate-200 hover:bg-slate-300 text-black font-semibold py-[6px] px-4 border rounded 
-  }
-
-  .button-pill {
-    @apply bg-black  text-sm hover:text-black hover:bg-slate-200  text-white font-bold py-[6px] px-4 rounded-full
-  } */
   .button {
     @apply rounded-md bg-black px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 transition-all duration-300
   }

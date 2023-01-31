@@ -1,7 +1,7 @@
 import { FC } from "react";
 
-import { useAtom } from "jotai";
 import { authModalState } from "@/atoms/authModal";
+import { useAtom } from "jotai";
 import Login from "./Login";
 import SignUp from "./SignUp";
 

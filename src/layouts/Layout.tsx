@@ -1,5 +1,5 @@
 import Navbar from "@/components/Navbar/Navbar";
-import { FC, Fragment, ReactNode } from "react";
+import { FC, ReactNode } from "react";
 
 type LayoutProps = {
   children: ReactNode;
@@ -7,7 +7,7 @@ type LayoutProps = {
 
 const Layout: FC<LayoutProps> = ({ children }) => {
   return (
-    <div>
+    <div className="font-inter">
       <Navbar />
       <main>{children}</main>
     </div>

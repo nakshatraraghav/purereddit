@@ -1,9 +1,9 @@
-import { FC } from "react";
 import Image from "next/image";
+import { FC } from "react";
 
-import SearchInput from "./SearchInput";
-import RightContent from "./RightContent/RightContent";
 import { AuthModal } from "../Modal/Auth/AuthModal";
+import RightContent from "./RightContent/RightContent";
+import SearchInput from "./SearchInput";
 
 const Navbar: FC = () => {
   return (

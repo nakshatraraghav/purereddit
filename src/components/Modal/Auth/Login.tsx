@@ -1,8 +1,8 @@
-import React, { useState } from "react";
 import Link from "next/link";
+import { useState } from "react";
 
-import { useAtom } from "jotai";
 import { authModalState } from "@/atoms/authModal";
+import { useAtom } from "jotai";
 
 const Login = () => {
   const [email, setEmail] = useState<string>("");

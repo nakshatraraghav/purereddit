@@ -8,6 +8,9 @@ module.exports = {
         "bg-gray": "#e5e7eb",
       },
     },
+    fontFamily: {
+      inter: "Inter",
+    },
   },
   plugins: [require("@tailwindcss/forms")],
 };
