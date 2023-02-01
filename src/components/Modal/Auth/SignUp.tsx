@@ -33,9 +33,6 @@ const SignUp = () => {
   const func = () => {};
   return (
     <form className="px-8 pt-2 pb-8 mb-4 w-full">
-      <div>
-        <h1 className="text-2xl mb-4">Sign Up</h1>
-      </div>
       <div className="mb-4">
         <label className="block text-gray-700 mb-2" htmlFor="username">
           E-Mail
