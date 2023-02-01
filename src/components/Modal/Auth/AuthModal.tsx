@@ -1,9 +1,12 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { FC, Fragment } from "react";
+import { FC, Fragment, useEffect } from "react";
 
 import { authModalState } from "@/atoms/authModal";
 import { useAtom } from "jotai";
 import AuthInputs from "./AuthInputs";
+
+import { auth } from "@/firebase/app";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 export const AuthModal: FC = () => {
   const [modalState, setModalState] = useAtom(authModalState);
@@ -14,6 +17,23 @@ export const AuthModal: FC = () => {
       open: !modalState.open,
     });
   }
+
+  const [user, loading, error] = useAuthState(auth);
+  // initially the user is set to null and the loading is true
+  // once user has been authenticated the value changes
+  // so what we want to do is that when the value changes from null to something
+  // we want to close the modal
+
+  useEffect(() => {
+    if (user) {
+      setModalState({
+        view: modalState.view,
+        open: false,
+      });
+      console.log("user", user);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
 
   return (
     <Fragment>

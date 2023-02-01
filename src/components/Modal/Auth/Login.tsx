@@ -6,12 +6,12 @@ import { useAtom } from "jotai";
 
 import { auth } from "@/firebase/app";
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
-import { setRequestMeta } from "next/dist/server/request-meta";
+import FIREBASE_ERRORS from "@/firebase/errors";
 
 const Login = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [formError, setFormError] = useState<string>("");
+
   const [modalState, setModalState] = useAtom(authModalState);
 
   const [signInWithEmailAndPassword, user, loading, error] =
@@ -19,18 +19,7 @@ const Login = () => {
 
   const onSubmit = (evt: FormEvent<HTMLButtonElement>) => {
     evt.preventDefault();
-    if (error) {
-      setFormError("");
-      return;
-    }
-    if (!email || email.length === 0 || !password || password.length === 0) {
-      setFormError("Please enter valid email or password");
-      return;
-    }
-    signInWithEmailAndPassword(email, password).then(() => {
-      alert("succesfully logged in");
-      alert(user?.user.email);
-    });
+    signInWithEmailAndPassword(email, password);
   };
 
   return (
@@ -70,9 +59,15 @@ const Login = () => {
         />
       </div>
       <div className="flex items-center justify-between">
-        <button className="button" type="button" onClick={onSubmit}>
-          Log In
-        </button>
+        {loading ? (
+          <button disabled className="button opacity-50">
+            Loading
+          </button>
+        ) : (
+          <button className="button" onClick={onSubmit}>
+            Sign Up
+          </button>
+        )}
         <Link
           className="inline-block ml-auto align-baseline text-sm text-black hover:text-stone-700"
           href="#"
@@ -80,9 +75,9 @@ const Login = () => {
           Forgot Password?
         </Link>
       </div>
-      {formError || error?.message ? (
-        <p>{formError || error?.message}</p>
-      ) : null}
+      <p className="text-red-600 font-semibold mt-2">
+        {FIREBASE_ERRORS[error?.message as keyof typeof FIREBASE_ERRORS]}
+      </p>
       <p className="mt-6">
         new to pureddit?{" "}
         <span
