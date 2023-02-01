@@ -1,14 +1,37 @@
 import Link from "next/link";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 
 import { authModalState } from "@/atoms/authModal";
 import { useAtom } from "jotai";
 
+import { auth } from "@/firebase/app";
+import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
+import { setRequestMeta } from "next/dist/server/request-meta";
+
 const Login = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-
+  const [formError, setFormError] = useState<string>("");
   const [modalState, setModalState] = useAtom(authModalState);
+
+  const [signInWithEmailAndPassword, user, loading, error] =
+    useSignInWithEmailAndPassword(auth);
+
+  const onSubmit = (evt: FormEvent<HTMLButtonElement>) => {
+    evt.preventDefault();
+    if (error) {
+      setFormError("");
+      return;
+    }
+    if (!email || email.length === 0 || !password || password.length === 0) {
+      setFormError("Please enter valid email or password");
+      return;
+    }
+    signInWithEmailAndPassword(email, password).then(() => {
+      alert("succesfully logged in");
+      alert(user?.user.email);
+    });
+  };
 
   return (
     <form className="px-8 pt-2 pb-8 mb-4 w-full">
@@ -44,7 +67,7 @@ const Login = () => {
         />
       </div>
       <div className="flex items-center justify-between">
-        <button className="button" type="button">
+        <button className="button" type="button" onClick={onSubmit}>
           Log In
         </button>
         <Link
@@ -54,6 +77,9 @@ const Login = () => {
           Forgot Password?
         </Link>
       </div>
+      {formError || error?.message ? (
+        <p>{formError || error?.message}</p>
+      ) : null}
       <p className="mt-6">
         new to pureddit?{" "}
         <span
