@@ -5,8 +5,6 @@ import { authModalState } from "@/atoms/authModal";
 import { useAtom } from "jotai";
 import AuthInputs from "./AuthInputs";
 
-//TODO: Implement Twitter, Github OAuth
-
 export const AuthModal: FC = () => {
   const [modalState, setModalState] = useAtom(authModalState);
 
@@ -46,28 +44,6 @@ export const AuthModal: FC = () => {
               >
                 <Dialog.Panel className="w-[600px] max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                   <div className="flex-col items-center justify-center">
-                    {modalState.view === "login" ? (
-                      <div>
-                        <h1 className="text-3xl text-center font-extrabold mb-4">
-                          Login
-                        </h1>
-                      </div>
-                    ) : null}
-                    {modalState.view === "signup" ? (
-                      <div>
-                        <h1 className="text-3xl font-bold text-center mb-4">
-                          Sign Up
-                        </h1>
-                      </div>
-                    ) : null}
-                    {modalState.view === "resetpassword" ? (
-                      <div>
-                        <h1 className="text-3xl text-center mb-4">
-                          Reset Password
-                        </h1>
-                      </div>
-                    ) : null}
-                    {/* <OAuthButtons /> */}
                     <AuthInputs />
                   </div>
                 </Dialog.Panel>
