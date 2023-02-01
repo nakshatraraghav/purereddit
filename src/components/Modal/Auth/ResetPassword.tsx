@@ -87,7 +87,7 @@ const ResetPassword: FC = () => {
                 });
               }}
             >
-              Reset Password
+              Sign Up
             </span>
           </p>
         </Fragment>

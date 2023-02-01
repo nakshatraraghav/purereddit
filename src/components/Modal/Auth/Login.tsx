@@ -64,7 +64,7 @@ const Login = () => {
           </button>
         ) : (
           <button className="button" onClick={onSubmit}>
-            Sign Up
+            Log In
           </button>
         )}
         <button
