@@ -8,6 +8,12 @@ import AuthInputs from "./AuthInputs";
 import { auth } from "@/firebase/app";
 import { useAuthState } from "react-firebase-hooks/auth";
 
+import { Inter } from "@next/font/google";
+
+const inter = Inter({
+  weight: "variable",
+});
+
 export const AuthModal: FC = () => {
   const [modalState, setModalState] = useAtom(authModalState);
 
@@ -63,7 +69,9 @@ export const AuthModal: FC = () => {
                 leaveTo="opacity-0 scale-95"
               >
                 <Dialog.Panel className="w-[600px] max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-                  <div className="flex-col items-center justify-center">
+                  <div
+                    className={`flex-col items-center justify-center ${inter.className}`}
+                  >
                     <AuthInputs />
                   </div>
                 </Dialog.Panel>

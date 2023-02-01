@@ -1,12 +1,11 @@
-import Link from "next/link";
 import { FormEvent, useState } from "react";
 
 import { authModalState } from "@/atoms/authModal";
 import { useAtom } from "jotai";
 
 import { auth } from "@/firebase/app";
-import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 import FIREBASE_ERRORS from "@/firebase/errors";
+import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 
 const Login = () => {
   const [email, setEmail] = useState<string>("");
@@ -68,12 +67,17 @@ const Login = () => {
             Sign Up
           </button>
         )}
-        <Link
-          className="inline-block ml-auto align-baseline text-sm text-black hover:text-stone-700"
-          href="#"
+        <button
+          className="text-blue-400 hover:text-blue-700 transition-all duration-300 hover:underline"
+          onClick={(evt) => {
+            setModalState({
+              ...modalState,
+              view: "resetpassword",
+            });
+          }}
         >
           Forgot Password?
-        </Link>
+        </button>
       </div>
       <p className="text-red-600 font-semibold mt-2">
         {FIREBASE_ERRORS[error?.message as keyof typeof FIREBASE_ERRORS]}

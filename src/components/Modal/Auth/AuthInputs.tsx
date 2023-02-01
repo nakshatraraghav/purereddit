@@ -4,6 +4,7 @@ import { authModalState } from "@/atoms/authModal";
 import { useAtom } from "jotai";
 import Login from "./Login";
 import SignUp from "./SignUp";
+import ResetPassword from "./ResetPassword";
 
 const AuthInputs: FC = () => {
   const [modalState] = useAtom(authModalState);
@@ -11,7 +12,7 @@ const AuthInputs: FC = () => {
     <div className="flex items-center w-full mt-4">
       {modalState.view === "login" && <Login />}
       {modalState.view === "signup" && <SignUp />}
-      {/* {modalState.view === "resetpassword" && <ResetPassword />} */}
+      {modalState.view === "resetpassword" && <ResetPassword />}
     </div>
   );
 };
