@@ -9,6 +9,15 @@ import { MdOutlineLogin } from "react-icons/md";
 
 import { AiOutlineStar } from "react-icons/ai"
 
+import { BiChevronDown, BiChevronUp } from "react-icons/bi"
+
+import { BiHome } from "react-icons/bi"
+
+export const chevron = {
+  down: BiChevronDown,
+  up: BiChevronUp
+};
+
 export const themeIcons = {
   dark: BsMoon,
   light: BsSun
