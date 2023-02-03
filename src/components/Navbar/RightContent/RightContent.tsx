@@ -14,7 +14,13 @@ const RightContent: FC<RightContentProps> = ({ user }) => {
   return (
     <div>
       <div className="flex items-center justify-between md:space-x-4">
-        {user ? <Icons /> : <AuthButtons />}
+        {user ? (
+          <Icons />
+        ) : (
+          <div className="hidden md:flex">
+            <AuthButtons />
+          </div>
+        )}
         <DropdownMenu user={user} />
       </div>
     </div>
