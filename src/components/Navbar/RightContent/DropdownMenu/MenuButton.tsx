@@ -24,6 +24,12 @@ const MenuButton = (user: DropdownMenuProps) => {
                   fontSize={28}
                   className="mr-1 text-gray-400"
                 />
+                {user ? (
+                  <div className="text-sm">
+                    {user?.user?.displayName ||
+                      user?.user?.email?.split("@")[0]}
+                  </div>
+                ) : null}
               </Fragment>
               <MenuButtonIcons.chevron fontWeight={700} />
             </div>

@@ -7,6 +7,8 @@ import { VscAccount } from "react-icons/vsc";
 import { CgProfile } from "react-icons/cg";
 import { MdOutlineLogin } from "react-icons/md";
 
+import { AiOutlineStar } from "react-icons/ai"
+
 export const themeIcons = {
   dark: BsMoon,
   light: BsSun
@@ -20,5 +22,6 @@ export const MenuButtonIcons = {
 
 export const MenuItemIcons = {
   profile: CgProfile,
-  logout: MdOutlineLogin
+  logout: MdOutlineLogin,
+  karma: AiOutlineStar
 }

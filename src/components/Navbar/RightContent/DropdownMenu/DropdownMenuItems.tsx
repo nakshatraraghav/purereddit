@@ -25,6 +25,19 @@ const DropdownMenuItems: FC<DropdownMenuItemsProps> = ({ user }) => {
             Profile
           </div>
         </MenuItem>
+        {user ? (
+          <MenuItem>
+            <div className="flex items-center">
+              <MenuItemIcons.karma fontSize={20} className="mr-2" />
+              <div className="flex space-x-2">
+                <div>Karma</div>
+                <div>{Math.floor(Math.random() * 100)}</div>
+              </div>
+            </div>
+          </MenuItem>
+        ) : (
+          ""
+        )}
         <MenuItem>
           <div
             className="flex items-center w-full"
