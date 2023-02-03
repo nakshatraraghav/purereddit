@@ -25,7 +25,7 @@ const MenuButton = (user: DropdownMenuProps) => {
                   className="mr-1 text-gray-400"
                 />
                 {user ? (
-                  <div className="text-sm">
+                  <div className="hidden lg:text-sm">
                     {user?.user?.displayName ||
                       user?.user?.email?.split("@")[0]}
                   </div>
