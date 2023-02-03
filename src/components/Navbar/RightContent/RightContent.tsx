@@ -2,26 +2,21 @@ import { FC } from "react";
 
 import AuthButtons from "./AuthButtons";
 
-import { auth } from "@/firebase/app";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { signOut } from "firebase/auth";
+import { User } from "firebase/auth";
+import DropdownMenu from "./DropdownMenu/DropdownMenu";
+import Icons from "./Icons";
 
-const RightContent: FC = () => {
-  const [user, loading, error] = useAuthState(auth);
+type RightContentProps = {
+  user?: User | null;
+};
+
+const RightContent: FC<RightContentProps> = ({ user }) => {
   return (
     <div>
-      {user ? (
-        <button
-          onClick={() => {
-            signOut(auth);
-          }}
-          className="button"
-        >
-          {user.email}
-        </button>
-      ) : (
-        <AuthButtons />
-      )}
+      <div className="flex items-center justify-between md:space-x-4">
+        {user ? <Icons /> : <AuthButtons />}
+        <DropdownMenu user={user} />
+      </div>
     </div>
   );
 };

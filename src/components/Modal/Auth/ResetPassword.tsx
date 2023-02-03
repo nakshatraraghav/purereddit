@@ -28,7 +28,6 @@ const ResetPassword: FC = () => {
     }
     sendPasswordResetEmail(email)
       .then(() => {
-        alert("mail sent succeesfully ");
         setSucess(true);
       })
       .catch((error) => {

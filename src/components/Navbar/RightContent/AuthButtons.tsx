@@ -5,10 +5,10 @@ const AuthButtons = () => {
   const [modalState, setModalState] = useAtom(authModalState);
 
   return (
-    <div className="space-x-2">
+    <div className="flex text-sm md:text-base space-x-2">
       {/* basically these buttons would trigger the modal to open and close */}
       <button
-        className="button rounded-xl bg-slate-200 text-black hover:bg-black hover:text-white"
+        className=" button rounded-xl bg-slate-200 text-black hover:bg-black hover:text-white"
         onClick={() => {
           setModalState({
             view: "signup",

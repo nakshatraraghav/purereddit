@@ -30,7 +30,6 @@ const SignUp = () => {
     createUserWithEmailAndPassword(email, password);
   };
 
-  const func = () => {};
   return (
     <form className="px-8 pt-2 pb-8 mb-4 w-full">
       <div>
