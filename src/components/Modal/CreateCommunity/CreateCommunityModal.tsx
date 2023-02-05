@@ -1,5 +1,5 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { ChangeEvent, FormEvent, Fragment, useState } from "react";
+import { ChangeEvent, Fragment, useState } from "react";
 
 import { CreateCommunityModalState } from "@/atoms/createCommunityModal";
 import { useAtom } from "jotai";
@@ -8,7 +8,13 @@ import { modalAnimations } from "@/headlessAnimations/Modal";
 
 import { Inter } from "@next/font/google";
 
+import { auth } from "@/firebase/app";
+
+import { useAuthState } from "react-firebase-hooks/auth";
+
 import { CommunityModalIcons } from "@/assets/icons";
+import { firestore } from "@/firebase/app";
+import { doc, getDoc, serverTimestamp, setDoc } from "firebase/firestore";
 
 const inter = Inter({
   weight: "variable",
@@ -19,6 +25,14 @@ export default function MyModal() {
   const [modalState, setModalState] = useAtom(CreateCommunityModalState);
   const [characterRemaining, setCharactersRemaining] = useState<number>(21);
   const [communityType, setCommunityType] = useState<string>("Public");
+  const [error, setError] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const [user, loadingUser, userError] = useAuthState(auth);
+  if (userError) {
+    alert(userError.message);
+  }
+
   function closeModal() {
     setModalState({
       open: false,
@@ -28,6 +42,47 @@ export default function MyModal() {
   function onCommunityTypeChange(evt: ChangeEvent<HTMLInputElement>) {
     setCommunityType(evt.target.name);
   }
+
+  const handleCommunityCreation = async () => {
+    // check for community name length
+    if (communityName.length <= 3) {
+      setError("Community Name Must be greater than 3 Characters");
+      return;
+    }
+    //TODO:
+    // check for valid community name without special characters
+
+    // check whether that name is taken or not
+    // if not then create the community
+
+    // creating a reference to a document with id: communityName in communities collection
+    // inside the firestore db, here the firestore is the actual db
+    // we can have multiple dbs so to specify which db to look inside of we use this
+    setLoading(true);
+
+    try {
+      const communityDocRef = doc(firestore, "communities", communityName);
+      const communityDoc = await getDoc(communityDocRef);
+
+      if (communityDoc.exists()) {
+        throw new Error(`r/${communityName} already exists, try another name`);
+      }
+
+      await setDoc(communityDocRef, {
+        creatorId: user?.uid,
+        createdAt: serverTimestamp(),
+        numberOfMembers: 1,
+        privacyType: communityType,
+      });
+
+      closeModal();
+    } catch (error: any) {
+      setError(error.message);
+    }
+
+    setLoading(false);
+    return;
+  };
 
   return (
     <Transition appear show={modalState.open} as={Fragment}>
@@ -62,6 +117,9 @@ export default function MyModal() {
                     className="relative z-0 block w-full rounded-md border-gray-300 pl-7 pr-12 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                     value={communityName}
                     onChange={(evt) => {
+                      if (evt.target.value.length === 0) {
+                        setError("");
+                      }
                       if (evt.target.value.length > 21) {
                         return;
                       }
@@ -76,6 +134,11 @@ export default function MyModal() {
                   >
                     Characters Remaining : {characterRemaining}
                   </div>
+                  {error && (
+                    <div className="text-sm text-red-500 font-bold">
+                      {error}
+                    </div>
+                  )}
                 </div>
                 <div className="mt-2   ">
                   <div className="font-semibold">Community Type</div>
@@ -140,11 +203,17 @@ export default function MyModal() {
                 <div className="mt-4 space-x-4">
                   <button
                     type="button"
-                    className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                    className="inline-flex justify-center disabled:opacity-50 rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                    disabled={loading}
+                    onClick={handleCommunityCreation}
                   >
                     Create Community
                   </button>
-                  <button className="button" onClick={closeModal}>
+                  <button
+                    className="button disabled:opacity-50"
+                    disabled={loading}
+                    onClick={closeModal}
+                  >
                     Close
                   </button>
                 </div>
