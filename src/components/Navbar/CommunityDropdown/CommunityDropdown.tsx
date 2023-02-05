@@ -15,7 +15,11 @@ const CommunityDropdown: React.FC = () => {
     <Fragment>
       <CreateCommunityModal />
       <div>
-        <Menu as="div" className="relative inline-block text-left">
+        <Menu
+          as="div"
+          className="relative inline-block text-left"
+          id="headlessui-menu-button-:Rcim:"
+        >
           <div>
             <Menu.Button className="flex w-full justify-center rounded-md p-[6px] text-sm font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
               <div className="flex md:space-x-1">
