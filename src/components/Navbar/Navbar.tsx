@@ -4,7 +4,7 @@ import { FC } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 
 import { AuthModal } from "../Modal/Auth/AuthModal";
-import CommunityDropdown from "./CommunityDropdown";
+import CommunityDropdown from "./CommunityDropdown/CommunityDropdown";
 import RightContent from "./RightContent/RightContent";
 import SearchInput from "./SearchInput";
 
