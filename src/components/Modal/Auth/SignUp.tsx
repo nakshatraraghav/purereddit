@@ -1,12 +1,14 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 
 import { authModalState } from "@/atoms/authModal";
 import { useAtom } from "jotai";
 
-import { auth } from "@/firebase/app";
+import { auth, firestore } from "@/firebase/app";
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
 
 import FIREBASE_ERRROS from "@/firebase/errors";
+import { addDoc, collection } from "firebase/firestore";
+import { User } from "firebase/auth";
 
 const SignUp = () => {
   const [email, setEmail] = useState<string>("");
@@ -14,8 +16,18 @@ const SignUp = () => {
   const [error, setError] = useState<string | undefined>("");
   const [modalState, setModalState] = useAtom(authModalState);
 
-  const [createUserWithEmailAndPassword, user, loading, userError] =
+  const [createUserWithEmailAndPassword, userCredential, loading, userError] =
     useCreateUserWithEmailAndPassword(auth);
+
+  const createUserDocument = async (user: User) => {
+    await addDoc(collection(firestore, "users"), JSON.parse(JSON.stringify(user)));
+  }
+
+  useEffect(() => {
+    if (userCredential) {
+      createUserDocument(userCredential.user);
+    }
+  }, [userCredential])
 
   const onSubmit = (evt: FormEvent<HTMLButtonElement>) => {
     evt.preventDefault();

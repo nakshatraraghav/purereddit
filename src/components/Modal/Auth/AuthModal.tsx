@@ -38,7 +38,6 @@ export const AuthModal: FC = () => {
         view: modalState.view,
         open: false,
       });
-      console.log("user", user);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
