@@ -14,7 +14,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 
 import { CommunityModalIcons } from "@/assets/icons";
 import { firestore } from "@/firebase/app";
-import { doc, getDoc, serverTimestamp, setDoc } from "firebase/firestore";
+import { doc, runTransaction, serverTimestamp } from "firebase/firestore";
 
 const inter = Inter({
   weight: "variable",
@@ -62,18 +62,58 @@ export default function MyModal() {
 
     try {
       const communityDocRef = doc(firestore, "communities", communityName);
-      const communityDoc = await getDoc(communityDocRef);
+      const communitySnippetsDocRef = doc(
+        firestore,
+        `users/${user?.uid}/communitySnippets/`,
+        communityName
+      );
+      await runTransaction(firestore, async (transaction) => {
+        // we are basically making the get document a part of the transaction
+        // by using the get on transaction
+        const communityDoc = await transaction.get(communityDocRef);
+        if (communityDoc.exists()) {
+          throw new Error(
+            `r/${communityName} already exists, try another name`
+          );
+        }
 
-      if (communityDoc.exists()) {
-        throw new Error(`r/${communityName} already exists, try another name`);
-      }
+        transaction.set(communityDocRef, {
+          creatorId: user?.uid,
+          createdAt: serverTimestamp(),
+          numberOfMembers: 1,
+          privacyType: communityType,
+        });
 
-      await setDoc(communityDocRef, {
-        creatorId: user?.uid,
-        createdAt: serverTimestamp(),
-        numberOfMembers: 1,
-        privacyType: communityType,
+        transaction.set(communitySnippetsDocRef, {
+          communityId: communityName,
+          isModerator: true,
+        });
       });
+
+      // Batched writes vs Transactions in Firestore
+      // are all or nothing => both
+      // use batched writes when new value insn't dependent on the old value
+      // use transactions when the new value is dependent
+      // example lets us say this app has a million concurrent users(absurd)
+      // then => if lets say two of them decide to create a community with the same name
+      // in batched write it would just create two separate batch writes
+      // but in transactions it reads the value first before writing it to the database
+      // in the case of a concurrent edit, firestore runs the transaction again
+
+      // for ex if a transaction reads document and another client modifies any of those documents
+      // firestore retires the entire transaction, this feature ensures that
+      // transactions are always up to date
+
+      // watch this https://www.youtube.com/watch?v=dOVSr0OsAoU
+
+      // here we are just creating the community in the database
+      // we are not adding this community to the user's community joined field
+      // here we will be using transaction / batched writes
+      // basically it is a all pass or all fail operation
+      // we dont want to add the community to users community joined field
+      // if creation of community has failed
+      // we also dont want to create the community if the
+      // writing to user [community joined has failed]
 
       closeModal();
     } catch (error: any) {
