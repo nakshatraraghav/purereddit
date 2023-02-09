@@ -7,13 +7,9 @@ type LayoutProps = {
   children: ReactNode;
 };
 
-const inter = Inter({
-  weight: "variable",
-});
-
 const Layout: FC<LayoutProps> = ({ children }) => {
   return (
-    <div className={inter.className}>
+    <div>
       <Navbar />
       <main>{children}</main>
     </div>

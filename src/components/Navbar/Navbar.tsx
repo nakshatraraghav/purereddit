@@ -11,7 +11,7 @@ import SearchInput from "./SearchInput";
 const Navbar: FC = () => {
   const [user, loading, error] = useAuthState(auth);
   return (
-    <nav className="h-14 p-4 flex items-center space-x-4">
+    <nav className="h-14 p-4 flex items-center space-x-4 bg-white">
       <div className="flex space-x-2">
         <Image
           src={"/images/redditFace.svg"}
