@@ -9,6 +9,7 @@ import NotFound from "@/components/Community/NotFound";
 import safeJsonStringify from "safe-json-stringify";
 import { Fragment } from "react";
 import Header from "@/components/Community/Header";
+import PageLayout from "@/layouts/PageLayout";
 
 type CommunityPageProps = {
   communityData: Community;
@@ -21,6 +22,14 @@ const CommunityPage: NextPage<CommunityPageProps> = ({ communityData }) => {
   return (
     <Fragment>
       <Header communityData={communityData} />
+      <PageLayout>
+        <Fragment>
+          <div>Left Container</div>
+        </Fragment>
+        <Fragment>
+          <div>Right Container</div>
+        </Fragment>
+      </PageLayout>
     </Fragment>
   );
 };

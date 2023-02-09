@@ -38,9 +38,13 @@ const Header: React.FC<HeaderProps> = ({ communityData }) => {
               </div>
             </div>
             {isJoined ? (
-              <button className="button rounded-2xl">Leave</button>
+              <button className="bg-blue-500 px-6 hover:bg-blue-700 text-white font-bold rounded-2xl transition-all duration-300">
+                Leave
+              </button>
             ) : (
-              <button className="button rounded-2xl">Join</button>
+              <button className="bg-blue-500 px-6 hover:bg-blue-700 text-white font-bold rounded-2xl  transition-all duration-300">
+                Join
+              </button>
             )}
           </div>
         </div>
