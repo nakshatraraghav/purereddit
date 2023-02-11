@@ -60,7 +60,11 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
     };
   } catch (err) {
     console.log(err);
-    return;
+    return {
+      props: {
+        communityData: "",
+      },
+    };
   }
 }
 

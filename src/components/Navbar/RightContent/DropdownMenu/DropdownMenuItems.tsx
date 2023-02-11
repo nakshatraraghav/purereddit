@@ -8,7 +8,8 @@ import { auth } from "@/firebase/app";
 import { signOut, User } from "firebase/auth";
 
 import { authModalState } from "@/atoms/authModal";
-import { useAtom } from "jotai";
+import { communityState } from "@/atoms/communities";
+import { useAtom, useSetAtom } from "jotai";
 
 type DropdownMenuItemsProps = {
   user?: User | null;
@@ -16,6 +17,14 @@ type DropdownMenuItemsProps = {
 
 const DropdownMenuItems: FC<DropdownMenuItemsProps> = ({ user }) => {
   const [modalState, setModalState] = useAtom(authModalState);
+  const setCommunityState = useSetAtom(communityState);
+  async function logout() {
+    await signOut(auth);
+    setCommunityState({
+      communitySnippets: [],
+    });
+  }
+
   return (
     <Transition {...DropdownAnimations}>
       <Menu.Items className="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
@@ -43,7 +52,7 @@ const DropdownMenuItems: FC<DropdownMenuItemsProps> = ({ user }) => {
             className="flex items-center w-full"
             onClick={() => {
               if (user) {
-                signOut(auth);
+                logout();
               } else {
                 setModalState({ view: "login", open: true });
               }
