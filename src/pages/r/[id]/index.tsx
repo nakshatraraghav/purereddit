@@ -5,6 +5,7 @@ import { GetServerSidePropsContext, NextPage } from "next";
 import { Community } from "@/atoms/communities";
 
 import NotFound from "@/components/Community/NotFound";
+import CreatePostLink from "@/components/Community/CreatePostLink"
 
 import safeJsonStringify from "safe-json-stringify";
 import { Fragment } from "react";
@@ -24,7 +25,7 @@ const CommunityPage: NextPage<CommunityPageProps> = ({ communityData }) => {
       <Header communityData={communityData} />
       <PageLayout>
         <Fragment>
-          <div>Left Container</div>
+          <CreatePostLink />
         </Fragment>
         <Fragment>
           <div>Right Container</div>

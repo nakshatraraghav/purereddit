@@ -14,6 +14,16 @@ import { BiChevronDown, BiChevronUp } from "react-icons/bi";
 import { BsFillEyeFill, BsFillPersonFill } from "react-icons/bs";
 import { HiLockClosed } from "react-icons/hi";
 
+import { FaReddit } from "react-icons/fa";
+import { IoImageOutline } from "react-icons/io5";
+import { BsLink45Deg } from "react-icons/bs";
+
+export const CreatePostLinkIcons = {
+  reddit: FaReddit,
+  image: IoImageOutline,
+  link: BsLink45Deg,
+};
+
 export const CommunityModalIcons = {
   public: BsFillPersonFill,
   restricted: BsFillEyeFill,
