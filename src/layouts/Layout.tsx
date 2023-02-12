@@ -3,13 +3,17 @@ import { FC, ReactNode } from "react";
 
 import { Inter } from "@next/font/google";
 
+const inter = Inter({
+  weight: "variable",
+});
+
 type LayoutProps = {
   children: ReactNode;
 };
 
 const Layout: FC<LayoutProps> = ({ children }) => {
   return (
-    <div>
+    <div className={inter.className}>
       <Navbar />
       <main>{children}</main>
     </div>

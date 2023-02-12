@@ -34,11 +34,11 @@ const CreatePostLink: React.FC = () => {
       />
       <CreatePostLinkIcons.image
         fontSize={28}
-        className="bg-gray-300  rounded-xl"
+        className="text-gray-500"
       />
       <CreatePostLinkIcons.link
         fontSize={28}
-        className="bg-gray-300 rounded-xl"
+        className="text-gray-500"
       />
     </div>
   );

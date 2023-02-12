@@ -1,4 +1,4 @@
-import { BsMoon, BsSun } from "react-icons/bs";
+import { BsMic, BsMoon, BsSun } from "react-icons/bs";
 
 import { BsChevronDown } from "react-icons/bs";
 import { FaRedditSquare } from "react-icons/fa";
@@ -17,6 +17,17 @@ import { HiLockClosed } from "react-icons/hi";
 import { FaReddit } from "react-icons/fa";
 import { IoImageOutline } from "react-icons/io5";
 import { BsLink45Deg } from "react-icons/bs";
+
+import { BiPoll } from "react-icons/bi";
+import { IoDocumentText } from "react-icons/io5";
+
+export const CreatePostFormIcons = {
+  post: IoDocumentText,
+  image: IoImageOutline,
+  link: BsLink45Deg,
+  poll: BiPoll,
+  talk: BsMic,
+};
 
 export const CreatePostLinkIcons = {
   reddit: FaReddit,
